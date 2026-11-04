@@ -20,7 +20,7 @@ integration (no BrowserStack SDK).
 ## 1. Get the code
 ```bash
 git clone <REPOSITORY_URL>
-cd <REPOSITORY_FOLDER>
+cd <REPOSITORY_FOLDER>/PytestPW-Legacy
 ```
 
 ## 2. Install dependencies
