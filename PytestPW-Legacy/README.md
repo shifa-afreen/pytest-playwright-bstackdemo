@@ -52,16 +52,13 @@ pytest -o addopts="--browser chromium"
 ```
 
 ## 4. Run on BrowserStack
-1. Copy the example env file and add **your own** credentials:
-   ```bash
-   cp .env.example .env          # Windows: copy .env.example .env
+1. Open `conftest.py` and replace the two placeholders at the top with **your own**
+   BrowserStack credentials:
+   ```python
+   BROWSERSTACK_USERNAME = "YOUR_BROWSERSTACK_USERNAME"
+   BROWSERSTACK_ACCESS_KEY = "YOUR_BROWSERSTACK_ACCESS_KEY"
    ```
-   Edit `.env`:
-   ```
-   BROWSERSTACK_USERNAME=<your username>
-   BROWSERSTACK_ACCESS_KEY=<your access key>
-   ```
-   `.env` is git-ignored, so your credentials are never committed.
+   Do not commit your real access key to a shared or public repository.
 
 2. Run with `BROWSERSTACK=1`:
 
@@ -77,8 +74,7 @@ pytest -o addopts="--browser chromium"
    (`-o addopts=...` removes the local-only `--headed --slowmo` options.)
 
 3. Open https://automate.browserstack.com to watch the session. Each run creates a new
-   build named `pytest-playwright-<YYYY-MM-DD_HH-MM-SS>`; set `BROWSERSTACK_BUILD_NAME`
-   in `.env` to use your own name.
+   build named `pytest-playwright-<YYYY-MM-DD_HH-MM-SS>`.
 
 ## Changing the BrowserStack platform
 The single platform is defined in `BSTACK_CAPS` in `conftest.py`
@@ -93,16 +89,15 @@ a local browser. After each test it reports pass/fail to the BrowserStack sessio
 
 ## Project layout
 ```
-conftest.py              # local vs BrowserStack browser fixture, session status
+conftest.py              # local vs BrowserStack browser fixture, credentials, session status
 pytest.ini               # base URL and local run options
 requirements.txt         # Python dependencies
-.env.example             # template for BrowserStack credentials
 tests/test_add_to_cart.py
 ```
 
 ## Troubleshooting
 - `playwright: command not found`: activate the virtual environment (step 2).
 - BrowserStack run fails to connect or shows an authorization error: check the username
-  and access key in `.env`.
+  and access key in `conftest.py`.
 - No browser window opens locally: make sure you ran plain `pytest` (not with
   `-o addopts=...`).
