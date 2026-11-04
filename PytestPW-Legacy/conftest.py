@@ -4,18 +4,16 @@ import urllib.parse
 from datetime import datetime
 
 import pytest
-from dotenv import load_dotenv
 from playwright.sync_api import Playwright
 
-# Load BROWSERSTACK_USERNAME / BROWSERSTACK_ACCESS_KEY from a local .env file (if present)
-load_dotenv()
+# >>> EDIT THESE TWO VALUES with your own BrowserStack credentials <<<
+# (https://www.browserstack.com/accounts/settings)
+# Do not commit your real access key to a shared or public repository.
+BROWSERSTACK_USERNAME = "YOUR_BROWSERSTACK_USERNAME"
+BROWSERSTACK_ACCESS_KEY = "YOUR_BROWSERSTACK_ACCESS_KEY"
 
-# Dynamic build name: unique per pytest run (all tests in one run share it).
-# Override with BROWSERSTACK_BUILD_NAME (e.g. in CI) if you want your own.
-BUILD_NAME = os.environ.get(
-    "BROWSERSTACK_BUILD_NAME",
-    "pytest-playwright-" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S"),
-)
+# Dynamic build name: unique for every pytest run (all tests in one run share it).
+BUILD_NAME = "pytest-playwright-" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # Single BrowserStack platform (legacy: plain Playwright over CDP, no BrowserStack SDK)
 BSTACK_CAPS = {
@@ -26,8 +24,8 @@ BSTACK_CAPS = {
     "name": "bstackdemo cart and checkout",
     "build": BUILD_NAME,
     "project": "PytestPW-Legacy",
-    "browserstack.username": os.environ.get("BROWSERSTACK_USERNAME", ""),
-    "browserstack.accessKey": os.environ.get("BROWSERSTACK_ACCESS_KEY", ""),
+    "browserstack.username": BROWSERSTACK_USERNAME,
+    "browserstack.accessKey": BROWSERSTACK_ACCESS_KEY,
 }
 
 
